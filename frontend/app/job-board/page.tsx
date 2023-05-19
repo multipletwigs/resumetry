@@ -11,7 +11,7 @@ const page = () => {
         Job Board
       </Text>
       <Text fontSize="md" color={"gray.400"} mb={8} textAlign="center">
-        Here's a list of companies that are hiring!
+        Here&apos;s a list of companies that are hiring!
       </Text>
       <VStack gap={4}>
         {COMPANIES.map((company: CompanyInfo) => (
