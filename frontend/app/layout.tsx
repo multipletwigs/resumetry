@@ -1,5 +1,8 @@
 // app/layout.tsx
+"use client";
+import Header from "@/components/Header";
 import { Providers } from "./providers";
+import Footer from "@/components/Footer";
 
 export default function RootLayout({
   children,
@@ -10,7 +13,9 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <Providers>
+          <Header />
           {children}
+          <Footer />
         </Providers>
       </body>
     </html>
