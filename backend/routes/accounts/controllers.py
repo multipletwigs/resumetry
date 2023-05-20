@@ -7,6 +7,7 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 from ... import db
 from .models import Account
 from ..resumes.models import Resume
+from ..resumes.util import *
 from .util import *
 
 # ----------------------------------------------- #
@@ -82,5 +83,5 @@ def upload_resume_controller(account_id, job_id):
     db.session.commit()
 
     response = Resume.query.get(id).toDict()
-    print(response)
-    return jsonify(response.serialize())
+    return { "data":
+        produce_question(response['resume_file'])}

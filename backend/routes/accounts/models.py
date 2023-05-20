@@ -40,7 +40,6 @@ class Account(db.Model):
         if isinstance(value, str) and value == '': return None
         else: return value
     
-    
 # How to serialize SqlAlchemy PostgreSQL Query to JSON => https://stackoverflow.com/a/46180522
     def toDict(self): 
         return { c.key: getattr(self, c.key) for c in inspect(self).mapper.column_attrs }
