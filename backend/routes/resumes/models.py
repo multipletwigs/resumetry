@@ -47,8 +47,8 @@ class Resume(db.Model):
 # How to serialize SqlAlchemy PostgreSQL Query to JSON => https://stackoverflow.com/a/46180522
     def toDict(self): 
         ret = { c.key: getattr(self, c.key) for c in inspect(self).mapper.column_attrs }
-        # ret['resume_file'] = base64.b64encode(ret['resume_file']).decode('utf-8')
-        ret['resume_file'] = base64.b64decode(ret['resume_file'])
+        ret['resume_file'] = base64.b64encode(ret['resume_file']).decode('utf-8')
+        # ret['resume_file'] = base64.b64decode(ret['resume_file'])
         return ret
 
     def __repr__(self):
