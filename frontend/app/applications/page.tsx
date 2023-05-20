@@ -16,7 +16,7 @@ const page = () => {
   })
 
   return (
-    <VStack>
+    <VStack w="full">
       <Box>
       <Text fontSize="2xl" fontWeight="bold" textAlign="center" mb={4}>
         Applications

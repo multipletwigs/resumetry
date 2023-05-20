@@ -2,18 +2,21 @@ import { FormInformation } from "@/components/FormSubmission";
 import { CompanyJobOpening } from "./JobDescriptions";
 
 export interface ApplicationData {
+  applicationId: number;
   formInformation: FormInformation; 
   jobOpening: CompanyJobOpening;
 }
 
 export const APPLICATION_DATA: ApplicationData[] = [
   {
+    applicationId: 1,
     formInformation: {
       name: "John Doe",
       resume: null,
       phoneNumber: "1234567890",
       email: "johndoe@example.com",
       coverLetter: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+      submittedOn: new Date(),
     },
     jobOpening: {
       jobId: 1,
@@ -27,12 +30,14 @@ export const APPLICATION_DATA: ApplicationData[] = [
     },
   },
   {
+    applicationId: 2,
     formInformation: {
       name: "Jane Smith",
       resume: null,
       phoneNumber: "9876543210",
       email: "janesmith@example.com",
       coverLetter: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+      submittedOn: new Date(),
     },
     jobOpening: {
       jobId: 2,
