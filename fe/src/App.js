@@ -19,6 +19,7 @@ function App() {
 
   useEffect(() => {
     if (buttonStatus === true) {
+      console.log("okay")
       const socket = io("http://localhost:5000", {
         transports: ["websocket"],
         cors: {
