@@ -96,7 +96,9 @@ const Form = () => {
         <FormControl id="phoneNumber">
           <FormLabel>Phone Number</FormLabel>
           <InputGroup>
-            <InputLeftAddon children="+60" />
+            <InputLeftAddon>
+              +60
+            </InputLeftAddon>
             <Input
               type="tel"
               name="phoneNumber"
