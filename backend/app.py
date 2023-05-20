@@ -1,18 +1,22 @@
 import os
+from flask_cors import CORS
 
 # App Initialization
 from . import create_app, db # from __init__ file
 app = create_app(os.getenv("CONFIG_MODE")) 
+CORS(app,resources={r"/*":{"origins":"*"}})
+
+BASE_ROUTE = "/api"
 
 # Hello World!
-@app.route('/')
+@app.route(BASE_ROUTE + '/')
 def hello():
     db.create_all()
     return "Hello World!"
 
 # Applications Routes
 from .routes.accounts import urls
-from .routes.items import urls
+from .routes.resumes import urls
 
 # ----------------------------------------------- #
 

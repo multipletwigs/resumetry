@@ -25,8 +25,7 @@ class Account(db.Model):
     phone_number = db.Column(db.String(20))
 
 # Relations: SQLAlchemy Basic Relationship Patterns => https://docs.sqlalchemy.org/en/14/orm/basic_relationships.html
-    items = db.relationship("Item", back_populates='account')    # Account May Own Many Items => One to Many
-
+    resumes = db.relationship("Resume", back_populates='account')    # Account May Own Many Items => One to Many
 
 # Validations => https://flask-validator.readthedocs.io/en/latest/index.html
     @classmethod

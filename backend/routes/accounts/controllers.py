@@ -6,6 +6,7 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
 from ... import db
 from .models import Account
+from ..resumes.models import Resume
 from .util import *
 
 # ----------------------------------------------- #
@@ -61,3 +62,25 @@ def delete_account_controller(account_id):
     db.session.commit()
     
     return ('Account with Id "{}" deleted successfully!').format(account_id)
+
+def upload_resume_controller(account_id, job_id):
+    file = request.files['file']
+    print(file)
+    filename = file.filename
+    print(filename)
+    resume_file = file.read()
+
+    id = str(uuid.uuid4())
+
+    # Create a new resume record in the database
+    new_resume = Resume(id             = id,
+                        account_id=account_id, 
+                        resume_file=resume_file, 
+                        resume_filename=filename, 
+                        job_id=job_id)
+    db.session.add(new_resume)
+    db.session.commit()
+
+    response = Resume.query.get(id).toDict()
+    print(response)
+    return jsonify(response.serialize())

@@ -5,7 +5,7 @@ import sys
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
 from ... import db
-from .models import Item
+from .models import Resume
 
 # ----------------------------------------------- #
 
@@ -13,17 +13,19 @@ from .models import Item
 # Session Object Methods => https://docs.sqlalchemy.org/en/14/orm/session_api.html#sqlalchemy.orm.Session
 # How to serialize SqlAlchemy PostgreSQL Query to JSON => https://stackoverflow.com/a/46180522
   
-def list_all_items_controller():
-    items = Item.query.all()
+def list_all_resumes_controller():
+    resumes = Resume.query.all()
     response = []
-    for item in items: response.append(item.toDict()) 
+    for resume in resumes: 
+        print(resume)
+        response.append(resume.toDict()) 
     return jsonify(response)
 
-def create_item_controller():
+def create_resume_controller():
     request_form = request.form.to_dict()
     
     id = str(uuid.uuid4())
-    new_item = Item( 
+    new_resume = Resume( 
                     id           = id,
                     name         = request_form['name'],
                     price        = float(request_form['price']),
@@ -31,32 +33,32 @@ def create_item_controller():
                     image_link   = request_form['image_link'],
                     account_id   = request_form['account_id'],
                     )
-    db.session.add(new_item)
+    db.session.add(new_resume)
     db.session.commit()
     
-    response = Item.query.get(id).toDict()
+    response = Resume.query.get(id).toDict()
     return jsonify(response)
 
-def retrieve_item_controller(item_id):
-    response = Item.query.get(item_id).toDict()
+def retrieve_resume_controller(resume_id):
+    response = Resume.query.get(resume_id).toDict()
     return jsonify(response)
 
-def update_item_controller(item_id):
+def update_resume_controller(resume_id):
     request_form = request.form.to_dict()
-    item = Item.query.get(item_id)
+    resume = Resume.query.get(resume_id)
     
-    item.name        = request_form['name']
-    item.price       = float(request_form['price'])
-    item.description = request_form['description']
-    item.image_link  = request_form['image_link']
-    item.account_id  = request_form['account_id']
+    resume.name        = request_form['name']
+    resume.price       = float(request_form['price'])
+    resume.description = request_form['description']
+    resume.image_link  = request_form['image_link']
+    resume.account_id  = request_form['account_id']
     db.session.commit()
     
-    response = Item.query.get(item_id).toDict()
+    response = Resume.query.get(resume_id).toDict()
     return jsonify(response)
     
-def delete_item_controller(item_id):
-    Item.query.filter_by(id=item_id).delete()
+def delete_resume_controller(resume_id):
+    Resume.query.filter_by(id=resume_id).delete()
     db.session.commit()
     
-    return ('Item with Id "{}" deleted successfully!').format(item_id)
+    return ('Resume with Id "{}" deleted successfully!').format(resume_id)
