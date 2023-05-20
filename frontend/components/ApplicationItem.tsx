@@ -72,6 +72,7 @@ const JobApplicationCard: React.FC<ApplicationData> = ({
           onClick={() => {
             router.push(`/applications/${jobOpening.jobId}`);
           }}
+          fontSize={"sm"}
         >
           Initiate Virtual Interview
         </Button>

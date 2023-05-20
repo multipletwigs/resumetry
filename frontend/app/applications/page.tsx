@@ -5,7 +5,7 @@ import { APPLICATION_DATA, ApplicationData } from '@/data/ApplicationData'
 import { VStack, Text, Box } from '@chakra-ui/react'
 import React, { useEffect } from 'react'
 
-const page = () => {
+const Page = () => {
 
   const [applicationData, setApplicationData] = React.useState<ApplicationData[] | null>(null)
 
@@ -13,7 +13,7 @@ const page = () => {
     if(applicationData === null){
       setApplicationData(APPLICATION_DATA)
     }
-  })
+  }, [applicationData])
 
   return (
     <VStack w="full">
@@ -34,4 +34,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page;

@@ -17,6 +17,7 @@ import {
 import { FiPaperclip } from "react-icons/fi";
 import { CompanyJobOpening } from "@/data/JobDescriptions";
 import { APPLICATION_DATA } from "@/data/ApplicationData";
+import { useResumeContext } from "@/context/ResumeContext";
 
 interface FormProps {
   job: CompanyJobOpening;
@@ -42,6 +43,7 @@ const Form = (props: FormProps) => {
   });
 
   const toast = useToast();
+  const [_, setResume] = useResumeContext().useResume; 
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
   const handleChange = (e: any) => {
@@ -60,13 +62,13 @@ const Form = (props: FormProps) => {
     }));
   };
 
-  const handleSubmit = (formData: FormInformation) => {
+  const handleSubmit = async (formData: FormInformation) => {
     // if any of the fields are empty, return
     if (
-      formData.name === "" ||
-      formData.resume === null ||
-      formData.phoneNumber === "" ||
-      formData.email === "" 
+      // formData.name === "" ||
+      formData.resume === null 
+      // formData.phoneNumber === "" ||
+      // formData.email === "" 
     ) {
       toast({
         title: "Form incomplete",
@@ -80,14 +82,54 @@ const Form = (props: FormProps) => {
     }
 
     setIsSubmitting(true);
-    APPLICATION_DATA.push({
-      applicationId: APPLICATION_DATA.length + 1,
-      formInformation: {...formData, submittedOn: new Date()},
-      jobOpening: props.job,
-    });
-    setTimeout(() => {
-      setIsSubmitting(false);
-    }, 2000);
+    const postFormData = new FormData(); 
+    postFormData.append("file", formData.resume);
+    
+    const res = await fetch("http://127.0.0.1:5000/api/accounts/26d81d8a-1d26-4877-bc23-adc9488846c1/jobs/123/upload", {
+      method: "POST",
+      body: postFormData,
+    })
+
+    if (res.status === 200) {
+
+      // Get JSON response
+      const parsedResume = await res.json(); 
+
+      // Save the parsed resume to a context variable
+      setResume((prevResume) => [...prevResume, {
+        resume: parsedResume.data,
+        job: props.job,
+      }]);
+
+      APPLICATION_DATA.push({
+        applicationId: APPLICATION_DATA.length + 1,
+        formInformation: {...formData, submittedOn: new Date()},
+        jobOpening: props.job,
+        resumeParsed: parsedResume.data, 
+      });
+
+      // Toast success upload
+      toast({
+        title: "Resume uploaded",
+        description: "Your resume has been parsed successfully. You may proceed with a virtual interview!",
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+        position: "top",
+      });
+      
+    } else {
+      // Toast error
+      toast({
+        title: "Resume upload failed",
+        description: "Your resume failed to upload. Please try again.",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+        position: "top",
+      });
+    }
+    setIsSubmitting(false);
   };
 
   return (
@@ -164,13 +206,14 @@ const Form = (props: FormProps) => {
           />
         </FormControl>
         <Button
-          onClick={() => {
-            handleSubmit(formData);
+          onClick={async () => {
+            await handleSubmit(formData);
           }}
           mt={4}
           colorScheme="teal"
           type="submit"
           isLoading={isSubmitting}
+          loadingText="Submitting"
         >
           Submit your application
         </Button>

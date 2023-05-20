@@ -1,11 +1,11 @@
 'use client'
 
-import { Box } from '@chakra-ui/react'
+import { Box, Divider } from '@chakra-ui/react'
 import React from 'react'
 
 const Footer = () => {
   return (
-    <Box>
+    <Box w="full" textAlign={'center'} mt={5}>
       Made with love by team Hackoyaki 🍜
     </Box>
   )
