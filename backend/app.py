@@ -1,8 +1,10 @@
 import os
+from flask_cors import CORS
 
 # App Initialization
 from . import create_app, db # from __init__ file
 app = create_app(os.getenv("CONFIG_MODE")) 
+CORS(app,resources={r"/*":{"origins":"*"}})
 
 # Hello World!
 @app.route('/')
