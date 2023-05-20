@@ -13,7 +13,7 @@ const page = () => {
       <Text fontSize="md" color={"gray.400"} mb={8} textAlign="center">
         Here&apos;s a list of companies that are hiring!
       </Text>
-      <VStack gap={4}>
+      <VStack gap={4} mx={5}>
         {COMPANIES.map((company: CompanyInfo) => (
           <CompanyCard key={company.name} company={company} />
         ))}

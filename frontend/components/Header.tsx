@@ -87,8 +87,10 @@ const Header = () => {
                 aria-label="Open Menu"
               />
             )}
-            <HStack spacing="3">
-              <HStack spacing="4">
+            <HStack spacing="3" display={{
+              base: "none",
+              lg: "flex",
+            }}>
                 <Avatar src="user-pfp.gif" size="md"/>
                 <Box>
                   <Box fontWeight="semibold">Zach Khong</Box>
@@ -96,7 +98,6 @@ const Header = () => {
                     Candidate
                   </Box>
                 </Box>
-              </HStack>
             </HStack>
           </HStack>
         </Container>
