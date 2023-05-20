@@ -16,7 +16,9 @@ from .models import Resume
 def list_all_resumes_controller():
     resumes = Resume.query.all()
     response = []
-    for resume in resumes: response.append(resume.toDict()) 
+    for resume in resumes: 
+        print(resume)
+        response.append(resume.toDict()) 
     return jsonify(response)
 
 def create_resume_controller():

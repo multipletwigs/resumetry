@@ -64,13 +64,23 @@ def delete_account_controller(account_id):
     return ('Account with Id "{}" deleted successfully!').format(account_id)
 
 def upload_resume_controller(account_id, job_id):
-    resume_file = request.files['resume_file']
+    file = request.files['file']
+    print(file)
+    filename = file.filename
+    print(filename)
+    resume_file = file.read()
 
-    # Save the resume file
-    filename = resume_file.filename
-    resume_file.save(filename)
+    id = str(uuid.uuid4())
 
     # Create a new resume record in the database
-    new_resume = Resume(user_id=account_id, resume_file=filename, job_id=job_id)
+    new_resume = Resume(id             = id,
+                        account_id=account_id, 
+                        resume_file=resume_file, 
+                        resume_filename=filename, 
+                        job_id=job_id)
     db.session.add(new_resume)
     db.session.commit()
+
+    response = Resume.query.get(id).toDict()
+    print(response)
+    return jsonify(response.serialize())

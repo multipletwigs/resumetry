@@ -2,6 +2,7 @@ from sqlalchemy import inspect
 from datetime import datetime
 from flask_validator import ValidateString, ValidateNumber, ValidateURL
 from sqlalchemy.orm import validates
+import base64
 import os.path
 import sys
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
@@ -24,8 +25,8 @@ class Resume(db.Model):
 # Relations: SQLAlchemy Basic Relationship Patterns => https://docs.sqlalchemy.org/en/14/orm/basic_relationships.html
     # job    = db.relationship("Job", back_populates="Resumes")
     # job_id = db.Column(db.String(100), db.ForeignKey("job.id"))
-    account    = db.relationship("Account", back_populates="resumes")
     account_id = db.Column(db.String(100), db.ForeignKey("account.id"))
+    account    = db.relationship("Account", back_populates="resumes")
 
     job_id = db.Column(db.String(50), nullable=False)
 
@@ -45,7 +46,10 @@ class Resume(db.Model):
     
 # How to serialize SqlAlchemy PostgreSQL Query to JSON => https://stackoverflow.com/a/46180522
     def toDict(self): 
-        return { c.key: getattr(self, c.key) for c in inspect(self).mapper.column_attrs }
+        ret = { c.key: getattr(self, c.key) for c in inspect(self).mapper.column_attrs }
+        # ret['resume_file'] = base64.b64encode(ret['resume_file']).decode('utf-8')
+        ret['resume_file'] = base64.b64decode(ret['resume_file'])
+        return ret
 
     def __repr__(self):
         return "<%r>" % self.resume_filename

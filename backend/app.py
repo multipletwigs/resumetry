@@ -6,8 +6,10 @@ from . import create_app, db # from __init__ file
 app = create_app(os.getenv("CONFIG_MODE")) 
 CORS(app,resources={r"/*":{"origins":"*"}})
 
+BASE_ROUTE = "/api"
+
 # Hello World!
-@app.route('/')
+@app.route(BASE_ROUTE + '/')
 def hello():
     db.create_all()
     return "Hello World!"
