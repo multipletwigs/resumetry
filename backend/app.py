@@ -4,6 +4,7 @@ from flask_cors import CORS
 # App Initialization
 from . import create_app, db # from __init__ file
 app = create_app(os.getenv("CONFIG_MODE")) 
+app.config['MAX_CONTENT_LENGTH'] = 16 * 1000 * 1000 # 16 MB
 CORS(app,resources={r"/*":{"origins":"*"}})
 
 BASE_ROUTE = "/api"

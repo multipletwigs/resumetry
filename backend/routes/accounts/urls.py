@@ -24,6 +24,8 @@ def retrieve_update_destroy_account(account_id):
 @app.route(BASE_ROUTE + "/accounts/<account_id>/jobs/<job_id>/upload", methods=['POST'])
 def upload_resume(account_id, job_id):
     if request.method == 'POST': 
+        # Print body of request
+        print("something", request.files['file'])
         print(account_id, job_id)
         return upload_resume_controller(account_id, job_id)
     else: return 'Method is Not Allowed'
