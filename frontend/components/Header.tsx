@@ -28,7 +28,7 @@ const navItems: NavItem[] = [
   },
   {
     name: "Applications",
-    href: "#",
+    href: "/applications",
     isActive: false,
   },
   {

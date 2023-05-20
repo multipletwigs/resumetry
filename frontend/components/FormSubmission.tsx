@@ -13,18 +13,26 @@ import {
   IconButton,
   Text,
   HStack,
+  useToast,
 } from "@chakra-ui/react";
 import { FiFile, FiPaperclip } from "react-icons/fi";
+import { CompanyJobOpening } from "@/data/JobDescriptions";
+import { APPLICATION_DATA } from "@/data/ApplicationData";
 
-interface FormInformation {
+interface FormProps {
+  job: CompanyJobOpening;
+}
+
+export interface FormInformation {
   name: string;
   resume: File | null;
   phoneNumber: string;
   email: string;
   coverLetter: string;
+  submittedOn?: Date;
 }
 
-const Form = () => {
+const Form = (props: FormProps) => {
   const [formData, setFormData] = useState<FormInformation>({
     name: "",
     resume: null,
@@ -32,6 +40,9 @@ const Form = () => {
     email: "",
     coverLetter: "",
   });
+
+  const toast = useToast();
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
   const handleChange = (e: any) => {
     const { name, value } = e.target;
@@ -50,9 +61,32 @@ const Form = () => {
   };
 
   const handleSubmit = (formData: FormInformation) => {
-    console.log(formData);
+    // if any of the fields are empty, return
+    if (
+      formData.name === "" ||
+      formData.resume === null ||
+      formData.phoneNumber === "" ||
+      formData.email === "" 
+    ) {
+      toast({
+        title: "Form incomplete",
+        description: "There are fields that are empty. Please ensure everything is filled in.",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+        position: "top",
+      });
+      return;
+    }
 
-    // Logic to send form data to backend
+    setIsSubmitting(true);
+    APPLICATION_DATA.push({
+      formInformation: formData,
+      jobOpening: props.job,
+    });
+    setTimeout(() => {
+      setIsSubmitting(false);
+    }, 2000);
   };
 
   return (
@@ -69,6 +103,7 @@ const Form = () => {
               <Input
                 type="file"
                 name="resume"
+                accept=".pdf"
                 onChange={handleFileChange}
                 display={"none"}
                 required
@@ -96,9 +131,7 @@ const Form = () => {
         <FormControl id="phoneNumber">
           <FormLabel>Phone Number</FormLabel>
           <InputGroup>
-            <InputLeftAddon>
-              +60
-            </InputLeftAddon>
+            <InputLeftAddon>+60</InputLeftAddon>
             <Input
               type="tel"
               name="phoneNumber"
@@ -136,6 +169,7 @@ const Form = () => {
           mt={4}
           colorScheme="teal"
           type="submit"
+          isLoading={isSubmitting}
         >
           Submit your application
         </Button>
