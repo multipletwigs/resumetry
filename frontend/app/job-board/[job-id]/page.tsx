@@ -88,16 +88,18 @@ export default function Home() {
           >
             {jobItem.job.jobSeniority} Level
           </Tag>
-          <VStack alignItems={'start'} w="full" gap="5">
+          <VStack alignItems={"start"} w="full" gap="5">
             <Box>
               <Text fontSize={"md"} fontWeight={"700"}>
                 About the company
               </Text>
-              <Text textAlign={'justify'} fontSize={"md"}>{jobItem.company.description}</Text>
+              <Text textAlign={"justify"} fontSize={"md"}>
+                {jobItem.company.description}
+              </Text>
             </Box>
 
             <Box>
-              <Text textAlign={'justify'} fontSize={"md"} fontWeight={"700"}>
+              <Text textAlign={"justify"} fontSize={"md"} fontWeight={"700"}>
                 About the job
               </Text>
               <Text fontSize={"md"}>{jobItem.job.jobDescription}</Text>
@@ -107,15 +109,15 @@ export default function Home() {
               <Text fontSize={"md"} fontWeight={"700"}>
                 Requirements for the job
               </Text>
-              <OrderedList fontSize={"md"}>{
-                jobItem.job.jobRequirements.map((requirement, idx) => (
+              <OrderedList fontSize={"md"}>
+                {jobItem.job.jobRequirements.map((requirement, idx) => (
                   <ListItem key={idx}>{requirement}</ListItem>
-                ))
-              }</OrderedList>
+                ))}
+              </OrderedList>
             </Box>
           </VStack>
           <VStack w="full">
-            <Form/>
+            <Form job={jobItem.job} />
           </VStack>
         </Container>
       </Stack>
