@@ -87,17 +87,20 @@ const Header = () => {
                 aria-label="Open Menu"
               />
             )}
-            <HStack spacing="3" display={{
-              base: "none",
-              lg: "flex",
-            }}>
-                <Avatar src="user-pfp.gif" size="md"/>
-                <Box>
-                  <Box fontWeight="semibold">Zach Khong</Box>
-                  <Box fontSize="sm" color="text-secondary">
-                    Candidate
-                  </Box>
+            <HStack
+              spacing="3"
+              display={{
+                base: "none",
+                lg: "flex",
+              }}
+            >
+              <Avatar src="user-pfp.gif" size="md" />
+              <Box>
+                <Box fontWeight="semibold">Zach Khong</Box>
+                <Box fontSize="sm" color="text-secondary">
+                  Candidate
                 </Box>
+              </Box>
             </HStack>
           </HStack>
         </Container>

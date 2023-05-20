@@ -1,6 +1,7 @@
 export interface UserData {
   name: string;
   available: boolean;
+  appRole: AppRole;
   details: {
     seniority: string;
     workExp: number;
@@ -9,14 +10,27 @@ export interface UserData {
   }
 }
 
-export const USER_DATA = {
-    name: 'John Doe',
-    available: true,
-    details: {
-      seniority: 'Junior',
-      workExp: 2,
-      location: 'Malaysia',
-      type: 'Full-time',
-    }
-}
+export type AppRole = 'candidate' | 'recruiter';
+
+// export const USER_DATA: UserData[] = [
+//   {
+//     name: 'John Doe',
+//     available: true,
+//     appRole: 'candidate',
+//     details: {
+//       seniority: 'Senior',
+//       workExp: 5,
+//       location: 'London',
+//       type: 'Full-time'
+//   }, {
+//     name: 'Jane Doe',
+//     available: false,
+//     appRole: 'recruiter',
+//     details: {
+//       seniority: 'Senior',
+//       workExp: 5,
+//       location: 'London',
+//       type: 'Full-time'
+//   }}
+// ] 
 

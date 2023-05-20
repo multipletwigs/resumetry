@@ -10,12 +10,11 @@ import {
   VStack,
   InputGroup,
   InputLeftAddon,
-  IconButton,
   Text,
   HStack,
   useToast,
 } from "@chakra-ui/react";
-import { FiFile, FiPaperclip } from "react-icons/fi";
+import { FiPaperclip } from "react-icons/fi";
 import { CompanyJobOpening } from "@/data/JobDescriptions";
 import { APPLICATION_DATA } from "@/data/ApplicationData";
 
@@ -29,7 +28,7 @@ export interface FormInformation {
   phoneNumber: string;
   email: string;
   coverLetter: string;
-  submittedOn?: Date;
+  submittedOn: Date;
 }
 
 const Form = (props: FormProps) => {
@@ -39,6 +38,7 @@ const Form = (props: FormProps) => {
     phoneNumber: "",
     email: "",
     coverLetter: "",
+    submittedOn: new Date(),
   });
 
   const toast = useToast();
@@ -81,7 +81,8 @@ const Form = (props: FormProps) => {
 
     setIsSubmitting(true);
     APPLICATION_DATA.push({
-      formInformation: formData,
+      applicationId: APPLICATION_DATA.length + 1,
+      formInformation: {...formData, submittedOn: new Date()},
       jobOpening: props.job,
     });
     setTimeout(() => {
