@@ -1,4 +1,4 @@
-# FIT2107_S2_2021
+# Backend
 
 ## Create a postgresql db instance on ElephantSQL and note down the db url
 
