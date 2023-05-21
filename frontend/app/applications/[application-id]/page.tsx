@@ -1,7 +1,16 @@
 "use client";
-import { ChatItemProps } from "@/components/ChatItem";
+import ChatItem from "@/components/ChatItem";
 import { ApplicationData, APPLICATION_DATA } from "@/data/ApplicationData";
-import { Box, VStack } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Container,
+  HStack,
+  Text,
+  Input,
+  SkeletonText,
+  VStack,
+} from "@chakra-ui/react";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -28,9 +37,13 @@ const fetchChat = async (
   });
 
   const data = await response.json();
-  console.log(data);
 
   return data.completion;
+};
+
+const checkTermination = (message: string) => {
+  // Check if message string contains underscore
+  return message.includes("_");
 };
 
 const Page = () => {
@@ -39,9 +52,11 @@ const Page = () => {
     ApplicationData | undefined
   >(undefined);
   const [chat, setChat] = useState<OpenAIChat[]>([]);
+  const [chatInput, setChatInput] = useState<string>("");
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const prompt =
-    "You will ask me only 3 questions about my resume, one question at a time to me. You do not answer as a candidate. I will first provide you a resume, then you ask the question. Once the interview is completed, respond with an underscore";
+    "You will ask me only 3 questions about my resume, one question at a time to me. You do not answer as a candidate. I will first provide you a resume, then you ask the question. When the user answered all the questions, respond with a thank you note and mention the recruiter will get back soon.";
 
   useEffect(() => {
     if (applicationData === undefined) {
@@ -60,27 +75,92 @@ const Page = () => {
         { role: "system", content: jobInfo },
         { role: "system", content: applicationData.resumeParsed },
       ]);
-      
+
       fetchChat(applicationData, [
         { role: "system", content: prompt },
         { role: "system", content: jobInfo },
         { role: "system", content: applicationData.resumeParsed },
       ]).then((response) => {
         setChat((prev) => [...prev, response]);
+        setIsLoading(false);
       });
     }
-  }, [applicationData, chat]);
+  }, [applicationData, chat, isLoading]);
 
   return (
-    <Box>
-      <VStack h="80vh">
-        {chat.filter((item)=>{
-          return item.role !== 'system'
-        }).map((item, idx)=>{
-          return <Box key={idx}>{item.content}</Box>
-        })}
-      </VStack>
-    </Box>
+    <VStack w="full">
+      <Text fontSize={"2xl"} fontWeight={"700"}>
+        {applicationData?.jobOpening.jobTitle}
+      </Text>
+      <Text textAlign={"center"} color="gray.500">
+        {applicationData?.jobOpening.jobDescription}
+      </Text>
+      <Container
+        py="10"
+        maxW={"800px"}
+        flex="column"
+        mb={5}
+        overflowY={"scroll"}
+        h="65vh"
+        css={{
+          "&::-webkit-scrollbar": {
+            display: "none",
+          },
+        }}
+      >
+        {chat
+          .filter((item) => {
+            return item.role !== "system";
+          })
+          .map((item, idx) => {
+            return <ChatItem key={idx} message={item} />;
+          })}
+        {isLoading && (
+          <Box>
+            <SkeletonText mt="4" noOfLines={3} spacing="4" skeletonHeight="2" />
+          </Box>
+        )}
+      </Container>
+      <HStack maxW="800px" w="full">
+        <Input
+          value={chatInput}
+          onChange={(e) => {
+            setChatInput(e.target.value);
+          }}
+          placeholder="Enter your message here!"
+        />
+        <Button
+          isLoading={isLoading}
+          loadingText={"Please wait"}
+          onKeyDown={async (e) => {
+            if (e.key === "Enter") {
+              console.log("Enter");
+              setChat((prev) => [
+                ...prev,
+                { role: "user", content: chatInput },
+              ]);
+              setChatInput("");
+              setIsLoading(true);
+              fetchChat(applicationData!, chat).then((response) => {
+                setChat((prev) => [...prev, response]);
+              });
+              setIsLoading(false);
+            }
+          }}
+          onClick={async () => {
+            setChat((prev) => [...prev, { role: "user", content: chatInput }]);
+            setChatInput("");
+            setIsLoading(true);
+            await fetchChat(applicationData!, chat).then((response) => {
+              setChat((prev) => [...prev, response]);
+            });
+            setIsLoading(false);
+          }}
+        >
+          Send
+        </Button>
+      </HStack>
+    </VStack>
   );
 };
 export default Page;

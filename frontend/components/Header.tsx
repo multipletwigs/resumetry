@@ -52,7 +52,7 @@ const Header = () => {
   });
 
   return (
-    <Box as="section" pb={12}>
+    <Box as="section" pb={8}>
       <Box as="nav" bg="bg-surface" boxShadow="sm">
         <Container maxW="90%" py={{ base: "4", lg: "5" }}>
           <HStack spacing="10" justifyContent={"space-between"}>

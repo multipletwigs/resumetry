@@ -5,8 +5,8 @@ import React from 'react'
 
 const Footer = () => {
   return (
-    <Box w="full" textAlign={'center'} mt={5}>
-      Made with love by team Hackoyaki 🍜
+    <Box w="full" textAlign={'center'} mt={10}>
+      Made with 💖 by Team Hackoyaki 🍜
     </Box>
   )
 }
