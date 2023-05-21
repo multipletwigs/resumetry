@@ -6,6 +6,7 @@ import {
   Button,
   ButtonGroup,
   Container,
+  Image,
   Flex,
   HStack,
   IconButton,
@@ -56,7 +57,7 @@ const Header = () => {
       <Box as="nav" bg="bg-surface" boxShadow="sm">
         <Container maxW="90%" py={{ base: "4", lg: "5" }}>
           <HStack spacing="10" justifyContent={"space-between"}>
-            <Box>resumetry</Box>
+            <Image src="resumetry.png" w="25" h="10"></Image>
             {isDesktop ? (
               <Flex justify="space-between">
                 <ButtonGroup variant="link" spacing="8">
