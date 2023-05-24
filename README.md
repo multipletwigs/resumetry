@@ -3,7 +3,7 @@
 
 Welcome to Resumetry! 🎉🚀
 
-Resumetry is a groundbreaking hackathon project that aims to revolutionize the way hiring managers interact with candidates before interviews. With Resumetry, we believe in making the hiring process more efficient, engaging, and, of course, cute! 😊🌟
+Resumetry is a groundbreaking hackathon project that aims to revolutionize the way hiring managers interact with candidates before interviews. With Resumetry, we believe in making the hiring process more efficient, and engaging! 😊🌟
 
 ## Table of Contents
 
@@ -18,37 +18,34 @@ Resumetry is an innovative web application developed using Next.js and Flask. It
 
 ## Features
 
-✨ **Interactive Questionnaires**: Resumetry offers a user-friendly interface for creating and sharing interactive questionnaires with candidates. Hiring managers can craft customized questionnaires to gain deeper insights into a candidate's skills, experiences, and personality.
+✨ **Interactive Questionnaires**: Resumetry offers a user-friendly interface for creating and sharing interactive questionnaires with candidates's resume.
 
 💌 **Seamless Communication**: Resumetry includes a built-in messaging system that allows hiring managers and candidates to communicate efficiently. This feature ensures clear and direct communication, eliminating any communication gaps or delays.
-
-📊 **Data Visualization**: Resumetry provides intuitive data visualization tools that help hiring managers analyze candidate responses effectively. Visualize trends, patterns, and key information to make informed decisions during the hiring process.
 
 🌐 **Next.js and Flask**: Resumetry is built using Next.js, a powerful React framework, for the frontend. The backend is powered by Flask, a lightweight and efficient Python web framework. This combination ensures a fast, responsive, and reliable application.
 
 ## Getting Started
 
-To get started with Resumetry, follow these steps:
+To get started with Resumetry, follow these steps: 
 
 1. Clone the Resumetry repository: `git clone https://github.com/yourusername/resumetry.git`
-2. Install the required dependencies for the frontend using `npm install`.
-3. Install the required dependencies for the backend using `pip install -r requirements.txt`.
-4. Start the frontend server: `npm run dev`.
-5. Start the backend server: `python app.py`.
+2. Within the `frontend` folder, install the required dependencies for the frontend using `npm install`.
+3. Within the `backend` folder, install the required dependencies for the backend using `pip install -r requirements.txt`.
+4. Start the frontend server: `pnpm run dev`.
+5. Start the backend server: `flask run`.
 6. Open your browser and navigate to `http://localhost:3000` to access Resumetry.
+
+You'll also need to create a .env file for your `OPENAI_API_KEY` for frontend. 
 
 ## Usage
 
 Once Resumetry is up and running, follow these steps to make the most of its features:
 
-1. Sign up as a hiring manager or log in to your existing account.
-2. Create a questionnaire tailored to the specific job position and requirements.
-3. Share the questionnaire with candidates by providing them with a unique link.
-4. Review candidate responses, engage in direct communication, and analyze the data visualizations.
-5. Shortlist candidates based on the collected information and proceed with interviews.
+1. Go to `Job Board` to apply for a job!
+2. Let Resumetry parse your Resume. 
+3. Head over to `Applications` to initiate virtual interview.
+4. Answer questions related to your resume!
 
-Start using Resumetry today and transform your hiring process into a delightful experience! If you have any questions or need assistance, feel free to contact our support team at support@resumetry.com.
-
-Let's make hiring adorable! 😍✨
+Start using Resumetry today and transform your hiring process into a delightful experience! If you have any questions or need assistance, feel free to contact our support team at zachkhong.workplace@gmail.com.
 
 
